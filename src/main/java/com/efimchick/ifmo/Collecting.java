@@ -102,15 +102,30 @@ public class Collecting {
         Map<Person, Double> numericalScore = totalScores(courseResultList.stream());
 
         Map<Person, String> minScore = numericalScore.entrySet().stream()
-                .peek(student -> result.put(student.getKey(), SCORE_A))
+                .flatMap((Map.Entry<Person, Double> student) -> {
+                    result.put(student.getKey(), SCORE_A);
+                    return Stream.of(student);
+                })
                 .filter(student -> student.getValue() < MIN_FOR_A)
-                .peek(student -> result.put(student.getKey(), SCORE_B))
+                .flatMap((Map.Entry<Person, Double> student) -> {
+                    result.put(student.getKey(), SCORE_B);
+                    return Stream.of(student);
+                })
                 .filter(student -> student.getValue() < MIN_FOR_B)
-                .peek(student -> result.put(student.getKey(), SCORE_C))
+                .flatMap((Map.Entry<Person, Double> student) -> {
+                    result.put(student.getKey(), SCORE_C);
+                    return Stream.of(student);
+                })
                 .filter(student -> student.getValue() < MIN_FOR_C)
-                .peek(student -> result.put(student.getKey(), SCORE_D))
+                .flatMap((Map.Entry<Person, Double> student) -> {
+                    result.put(student.getKey(), SCORE_D);
+                    return Stream.of(student);
+                })
                 .filter(student -> student.getValue() < MIN_FOR_D)
-                .peek(student -> result.put(student.getKey(), SCORE_E))
+                .flatMap((Map.Entry<Person, Double> student) -> {
+                    result.put(student.getKey(), SCORE_E);
+                    return Stream.of(student);
+                })
                 .filter(student -> student.getValue() < MIN_FOR_E)
                 .collect(Collectors.toMap(Map.Entry::getKey, y -> SCORE_F));
 
