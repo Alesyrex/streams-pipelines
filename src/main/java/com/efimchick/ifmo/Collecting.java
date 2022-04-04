@@ -2,6 +2,7 @@ package com.efimchick.ifmo;
 
 import com.efimchick.ifmo.util.CourseResult;
 import com.efimchick.ifmo.util.Person;
+import com.efimchick.ifmo.util.Score;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,17 +14,6 @@ import java.util.stream.Stream;
 
 public class Collecting {
     public static final int DIVISOR = 2;
-    public static final String SCORE_A = "A";
-    public static final String SCORE_B = "B";
-    public static final String SCORE_C = "C";
-    public static final String SCORE_D = "D";
-    public static final String SCORE_E = "E";
-    public static final String SCORE_F = "F";
-    public static final int MIN_FOR_A = 90;
-    public static final int MIN_FOR_B = 83;
-    public static final int MIN_FOR_C = 75;
-    public static final int MIN_FOR_D = 68;
-    public static final int MIN_FOR_E = 60;
     public static final double EPSILON = 0.00001;
 
     public int sum(IntStream intStream) {
@@ -45,7 +35,6 @@ public class Collecting {
     }
 
     public Map<Person, Double> totalScores(Stream<CourseResult> courseResultStream) {
-
         List<CourseResult> courseResultList = courseResultStream.collect(Collectors.toList());
 
         long countTasks = getCountTasks(courseResultList);
@@ -103,31 +92,31 @@ public class Collecting {
 
         Map<Person, String> minScore = numericalScore.entrySet().stream()
                 .flatMap((Map.Entry<Person, Double> student) -> {
-                    result.put(student.getKey(), SCORE_A);
+                    result.put(student.getKey(), Score.A.getNameScore());
                     return Stream.of(student);
                 })
-                .filter(student -> student.getValue() < MIN_FOR_A)
+                .filter(student -> student.getValue() < Score.A.getMinScore())
                 .flatMap((Map.Entry<Person, Double> student) -> {
-                    result.put(student.getKey(), SCORE_B);
+                    result.put(student.getKey(), Score.B.getNameScore());
                     return Stream.of(student);
                 })
-                .filter(student -> student.getValue() < MIN_FOR_B)
+                .filter(student -> student.getValue() < Score.B.getMinScore())
                 .flatMap((Map.Entry<Person, Double> student) -> {
-                    result.put(student.getKey(), SCORE_C);
+                    result.put(student.getKey(), Score.C.getNameScore());
                     return Stream.of(student);
                 })
-                .filter(student -> student.getValue() < MIN_FOR_C)
+                .filter(student -> student.getValue() < Score.C.getMinScore())
                 .flatMap((Map.Entry<Person, Double> student) -> {
-                    result.put(student.getKey(), SCORE_D);
+                    result.put(student.getKey(), Score.D.getNameScore());
                     return Stream.of(student);
                 })
-                .filter(student -> student.getValue() < MIN_FOR_D)
+                .filter(student -> student.getValue() < Score.D.getMinScore())
                 .flatMap((Map.Entry<Person, Double> student) -> {
-                    result.put(student.getKey(), SCORE_E);
+                    result.put(student.getKey(), Score.E.getNameScore());
                     return Stream.of(student);
                 })
-                .filter(student -> student.getValue() < MIN_FOR_E)
-                .collect(Collectors.toMap(Map.Entry::getKey, y -> SCORE_F));
+                .filter(student -> student.getValue() < Score.E.getMinScore())
+                .collect(Collectors.toMap(Map.Entry::getKey, y -> Score.F.getNameScore()));
 
         result.putAll(minScore);
         return result;
