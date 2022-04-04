@@ -3,6 +3,8 @@
 ### Example user template
 
 # IntelliJ project files
+Y
+Y.pub
 .idea
 *.iml
 out
